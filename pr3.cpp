@@ -21,6 +21,10 @@ private:
 	int players_cnt;
 };
 
+void GameBoard::generate_board() {
+	
+}
+
 /*
 
   |EMP| |CST| | |-->| |^ ^| |

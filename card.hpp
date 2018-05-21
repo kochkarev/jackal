@@ -10,8 +10,7 @@ public:
 	bool is_opened() const { return opened; }
 	virtual void print_card() = 0;
 protected:
-	int cardpos_row;
-	int cardpos_col;
+	std::pair<int, int> card_pos;
 	bool opened;
 };
 

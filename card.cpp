@@ -58,8 +58,7 @@ void Card::open_card() {
 }*/
 
 NoStandCard::NoStandCard(NoStandCardType type, int row, int col) {
-	cardpos_row = row;
-	cardpos_col = col;
+	card_pos = std::make_pair(row, col);
 	opened = true;
 	nscard_type = type;
 }
@@ -91,8 +90,7 @@ void NoStandCard::print_card() {
 }
 
 StandCard::StandCard(StandCardType type, int row, int col) {
-	cardpos_row = row;
-	cardpos_col = col;
+	card_pos = std::make_pair(row, col);
 	opened = true;
 	scard_type = type;
 	pirates_cnt = 0;
@@ -174,8 +172,7 @@ void StandCard::print_card() {
 }*/
 
 ShipCard::ShipCard(PlayerColor color, int row, int col) {
-	cardpos_row = row;
-	cardpos_col = col;
+	card_pos = std::make_pair(row, col);
 	ship_color = color;
 	pirates_cnt = 3;
 	opened = true;
