@@ -30,62 +30,61 @@ void Card::open_card() {
 	}
 }
 
-/*std::ostream& operator<<(std::ostream& os, const NoStandCard& card) {
-	if (!card.is_opened()) {
-		os << "|CLO|\033[5D\033[1E|SED|\033[1A";
-		return os;
-	} 
-	switch(card.nscard_type) {
-		case NSC_ARRUP:
-			os << "|\u2191 \u2191|\033[5D\033[1E|\u2191 \u2191|\033[1A";
-			break;
-		case NSC_ARRDOWN:
-			os << "|\u2193 \u2193|\033[5D\033[1E|\u2193 \u2193|\033[1A";
-			break;
-		case NSC_ARRRIGHT:
-			os << "|\u2192 \u2192|\033[5D\033[1E|\u2192 \u2192|\033[1A";
-			break;
-		case NSC_ARRLEFT:
-			os << "|\u2190 \u2190|\033[5D\033[1E|\u2190 \u2190|\033[1A";
-			break;
-		case NSC_MANEATER:
-			os << "|MAN|\033[5D\033[1E|EAT|\033[1A";
-			break;
-		default:
-			throw "BAD NSC_TYPE";
-	}
-	return os;
-}*/
-
 NoStandCard::NoStandCard(NoStandCardType type, int row, int col) {
 	card_pos = std::make_pair(row, col);
 	opened = true;
 	nscard_type = type;
 }
 
-void NoStandCard::print_card() {
+void NoStandCard::print_card_up() {
 	if (opened) {
 		switch(nscard_type) {
 			case NSC_ARRUP:
-			std::cout << "|\u2191 \u2191|\033[5D\033[1E|\u2191 \u2191|\033[1A";
+			std::cout << "|\u2191 \u2191|";
 			break;
 		case NSC_ARRDOWN:
-			std::cout << "|\u2193 \u2193|\033[5D\033[1E|\u2193 \u2193|\033[1A";
+			std::cout << "|\u2193 \u2193|";
 			break;
 		case NSC_ARRRIGHT:
-			std::cout << "|\u2192 \u2192|\033[5D\033[1E|\u2192 \u2192|\033[1A";
+			std::cout << "|\u2192 \u2192|";
 			break;
 		case NSC_ARRLEFT:
-			std::cout << "|\u2190 \u2190|\033[5D\033[1E|\u2190 \u2190|\033[1A";
+			std::cout << "|\u2190 \u2190|";
 			break;
 		case NSC_MANEATER:
-			std::cout << "|MAN|\033[5D\033[1E|EAT|\033[1A";
+			std::cout << "|MAN|";
 			break;
 		default:
 			throw "BAD NSC_TYPE";
 		}
 	} else {
-		std::cout << "|CLO|\033[5D\033[1E|SED|\033[1A";
+		std::cout << "|CLO|";
+	}
+}
+
+void NoStandCard::print_card_down() {
+	if (opened) {
+		switch(nscard_type) {
+			case NSC_ARRUP:
+			std::cout << "|\u2191 \u2191|";
+			break;
+		case NSC_ARRDOWN:
+			std::cout << "|\u2193 \u2193|";
+			break;
+		case NSC_ARRRIGHT:
+			std::cout << "|\u2192 \u2192|";
+			break;
+		case NSC_ARRLEFT:
+			std::cout << "|\u2190 \u2190|";
+			break;
+		case NSC_MANEATER:
+			std::cout << "|EAT|";
+			break;
+		default:
+			throw "BAD NSC_TYPE";
+		}
+	} else {
+		std::cout << "|SED|";
 	}
 }
 
@@ -123,53 +122,34 @@ StandCard::StandCard(StandCardType type, int row, int col) {
 	set_tag();
 }
 
-/*std::ostream& operator<<(std::ostream& os, const StandCard& card) {
-	if (!card.is_opened()) {
-		os << "|CLO|\033[5D\033[1E|SED|\033[1A";
-		return os;
-	}
-	os << "|" << card.card_tag << "|\033[5D\033[1E|" << card.pirates_cnt;
-	if (card.treasure) {
-		if (card.coins_left > 0) {
-			os << "*" << card.coins_left << "|\033[1A";
-		} else {
-			os << " *|\033[1A"; 
-		}
-	} else {
-		if (card.coins_left > 0) {
-			os << " " << card.coins_left << "|\033[1A";
-		} else {
-			os << "  |\033[1A";
-		}
-	} 
-	return os;
-}*/
-
-void StandCard::print_card() {
+void StandCard::print_card_up() {
 	if (opened) {
-		std::cout << "|" << card_tag << "|\033[5D\033[1E|" << pirates_cnt;
-		if (treasure) {
-			if (coins_left > 0) {
-				std::cout << "*" << coins_left << "|\033[1A";
-			} else {
-				std::cout << " *|\033[1A"; 
-			}
-		} else {
-			if (coins_left > 0) {
-				std::cout << " " << coins_left << "|\033[1A";
-			} else {
-				std::cout << "  |\033[1A";
-			}
-		}
+		std::cout << "|" << card_tag << "|";
 	} else {
-		std::cout << "|CLO|\033[5D\033[1E|SED|\033[1A";
+		std::cout << "|CLO|";
 	}
 }
 
-/*std::ostream& operator<<(std::ostream& os, const ShipCard& card) {
-	os << "|SHP|\033[5D\033[1E|" << card.pirates_cnt << "  |\033[1A";
-	return os;
-}*/
+void StandCard::print_card_down() {
+	if (opened) {
+		std::cout << "|" << pirates_cnt;
+		if (treasure) {
+			if (coins_left > 0) {
+				std::cout << "*" << coins_left << "|";
+			} else {
+				std::cout << " *|"; 
+			}
+		} else {
+			if (coins_left > 0) {
+				std::cout << " " << coins_left << "|";
+			} else {
+				std::cout << "  |";
+			}
+		}
+	} else {
+		std::cout << "|SED|";
+	}
+}
 
 ShipCard::ShipCard(PlayerColor color, int row, int col) {
 	card_pos = std::make_pair(row, col);
@@ -178,7 +158,13 @@ ShipCard::ShipCard(PlayerColor color, int row, int col) {
 	opened = true;
 }
 
- 
+void ShipCard::print_card_up() {
+	std::cout << "|SHP|";
+}
+
+ void ShipCard::print_card_down() {
+ 	std::cout << "|" << pirates_cnt << "  |";
+ }
 
 
 
