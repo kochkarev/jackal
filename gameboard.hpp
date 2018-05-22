@@ -3,9 +3,6 @@
 #include <map>
 #include <memory>
 
-#include "constants.hpp"
-#include "card.hpp"
-
 class Player {
 public:
 
@@ -19,6 +16,7 @@ private:
 class GameBoard {
 public:
 	GameBoard() { generate_board(); }
+	void print_board();
 private:
 	std::vector<std::shared_ptr<Card>> board;
 	int players_cnt;

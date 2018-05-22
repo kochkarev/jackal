@@ -5,17 +5,38 @@
 
 #include "constants.hpp"
 #include "card.hpp"
+#include "gameboard.hpp"
+
+void GameBoard::print_board() {
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			board[i * BOARD_SIZE + j] -> print_card_up();
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			board[i * BOARD_SIZE + j] -> print_card_down();
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
+}
 
 void GameBoard::generate_board() {
 	unsigned tmp_card;
+	//int count = 1;
 	std::map<unsigned, int> left_cards = fill_cards_map();
+	board.resize(BOARD_SIZE * BOARD_SIZE); //std::cout<<"board std::vector wasresized\n";
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (card_allowed_pos(i ,j)) {
 				do {
+					//std::cout<<"trying to generate \n";
 					tmp_card = rand() % CARD_TYPES;
 				} while (left_cards[tmp_card] <= 0);
+				//std::cout<<"number was generated \n";
 				left_cards[tmp_card]--;
+				//std::cout << "card number " << count++ << "added to (" << i << "; " << j << ")\n";
 				switch (tmp_card) {
 					case EMPTY:
 						board[i * BOARD_SIZE + j] = std::make_shared<StandCard>(SC_EMPTY, i, j);
@@ -54,14 +75,16 @@ void GameBoard::generate_board() {
 						throw "BAD GENERATED NUMBER";
 				}
 			} else {
+				//std::cout<<"putting  NOcard " << i << " " << j << "\n";
 				board[i * BOARD_SIZE + j] = std::make_shared<NoCard>(i, j);
 			}
 		}
 	}
-	board[BOARD_SIZE / 2] = std::make_shared<ShipCard>(PLC_RED, 0, BOARD_SIZE / 2);
-	board[BOARD_SIZE * BOARD_SIZE] = std::make_shared<ShipCard>(PLC_GREEN, BOARD_SIZE / 2, 0);
-	board[BOARD_SIZE * BOARD_SIZE + BOARD_SIZE / 2] = std::make_shared<ShipCard>(PLC_BLUE, BOARD_SIZE, BOARD_SIZE / 2);
-	board[BOARD_SIZE * BOARD_SIZE / 2 + BOARD_SIZE] = std::make_shared<ShipCard>(PLC_YELLOW, BOARD_SIZE, BOARD_SIZE / 2);
+	//std::cout << "start putting ships\n";
+	board[6] = std::make_shared<ShipCard>(PLC_RED, 0, 6);
+	board[6 * BOARD_SIZE] = std::make_shared<ShipCard>(PLC_GREEN, 6, 0);
+	board[(BOARD_SIZE - 1) * BOARD_SIZE + 6] = std::make_shared<ShipCard>(PLC_BLUE, BOARD_SIZE - 1, 6);
+	board[6 * BOARD_SIZE + BOARD_SIZE - 1] = std::make_shared<ShipCard>(PLC_YELLOW, 6, BOARD_SIZE);
 }
 
 std::map<unsigned, int> GameBoard::fill_cards_map() {
@@ -81,19 +104,18 @@ std::map<unsigned, int> GameBoard::fill_cards_map() {
 }
 
 bool GameBoard::card_allowed_pos(int row, int col) {
-	if (row == 0 || row == BOARD_SIZE || col == 0 || col == BOARD_SIZE) {
+	if (row == 0 || row == BOARD_SIZE - 1 || col == 0 || col == BOARD_SIZE - 1) {
 		return false;
 	} else if (row == 1) {
-		if (col == 1 || col == BOARD_SIZE - 1) {
+		if (col == 1 || col == BOARD_SIZE - 2) {
 			return false;
 		}
-	} else if (row == BOARD_SIZE - 1) {
-		if (col == 1 || col == BOARD_SIZE - 1) {
+	} else if (row == BOARD_SIZE - 2) {
+		if (col == 1 || col == BOARD_SIZE - 2) {
 			return false;
 		}
-	} else {
-		return true;
-	}
+	} 
+	return true;
 }
 
 /*
