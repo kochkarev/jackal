@@ -20,7 +20,7 @@ public:
 	NoCard(int row, int col) { card_pos = std::make_pair(row, col); }
 	virtual void print_card_up();
 	virtual void print_card_down();
-}
+};
 
 class NoStandCard : public Card {
 public:

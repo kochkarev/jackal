@@ -166,6 +166,14 @@ void ShipCard::print_card_up() {
  	std::cout << "|" << pirates_cnt << "  |";
  }
 
+ void NoCard::print_card_up() {
+ 	std::cout << "|   |";
+ }
+
+ void NoCard::print_card_down() {
+ 	std::cout << "|   |";
+ }
+
 
 
 

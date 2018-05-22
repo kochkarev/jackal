@@ -24,7 +24,7 @@ enum {
 };
 
 enum {
-	BOAR_SIZE = 12, CARD_TYPES = 11
+	BOARD_SIZE = 12, CARD_TYPES = 11
 };
 
 #endif
