@@ -17,6 +17,7 @@ private:
 	std::vector<Player> players;
 	std::shared_ptr<GameBoard> board_ptr;
 	void register_players();
+	friend class TestGameSession;
 };
 
 #endif

@@ -23,6 +23,7 @@ private:
 	bool carry_coin = false;
 	bool carry_treasure = false;
 	bool on_ship = true;
+	friend class TestPirate;
 };
 
 class Player {
@@ -41,6 +42,7 @@ private:
 	int pirates_cnt = 3;
 	int coins_on_ship = 0;
 	bool check_ship_move(MoveTypes type);
+	friend class TestPlayer;
 };
 
 #endif

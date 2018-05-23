@@ -18,6 +18,7 @@ private:
 	void generate_board(); 
 	std::map<unsigned, int> fill_cards_map();
 	bool card_allowed_pos(int row, int col);
+	friend class TestGameBoard;
 };
 
 #endif
