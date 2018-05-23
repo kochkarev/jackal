@@ -4,6 +4,7 @@
 #include "card.hpp"
 #include "constants.hpp"
 #include "gameboard.hpp"
+#include "game_session.hpp"
 
 int main() {
 

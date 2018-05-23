@@ -1,12 +1,9 @@
-#ifndef __GAMEBOARD_HPP__
-#define __GAMEBOARD_HPP__
+#ifndef __PLAYER_HPP__
+#define __PLAYER_HPP__
 
-#include <iostream>
-#include <vector>
-#include <map>
-#include <memory>
-
-class GameBoard;
+#include "gameboard.hpp"
+#include "card.hpp"
+#include "constants.hpp"
 
 class Pirate {
 public:
@@ -30,7 +27,7 @@ private:
 
 class Player {
 public:
-	Player(const std::string& name, PlayerColor color) : player_name(name), player_color(color) {}
+	Player(const std::string& name, PlayerColor color);
 	void print_info();
 	void set_ship_pos(int row, int col) { ship_pos = std::make_pair(row, col); }
 	void set_board(std::shared_ptr<GameBoard> board) { game_board = board; }
@@ -46,35 +43,4 @@ private:
 	bool check_ship_move(MoveTypes type);
 };
 
-class GameBoard {
-public:
-	GameBoard(int players = 4) : players_cnt(players) { generate_board(); }
-	void print_board();
-	void swap_cards(std::pair<int, int> op1, std::pair<int, int> op2);
-private:
-	std::vector<std::shared_ptr<Card>> board;
-	int players_cnt;
-	void generate_board(); 
-	std::map<unsigned, int> fill_cards_map();
-	bool card_allowed_pos(int row, int col);
-};
-
-class GameSession {
-public:
-	void start(); // TODO
-private:
-	int players_num;
-	bool finished = false;
-	std::string win_player;
-	std::vector<Player> players;
-	std::shared_ptr<GameBoard> board_ptr;
-	void register_players();
-};
-
 #endif
-
-
-
-
-
-
