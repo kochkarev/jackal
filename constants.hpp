@@ -2,7 +2,7 @@
 #define __CONSTANTS_HPP__
 
 enum PlayerColor {
-	PLC_RED, PLC_YELLOW, PLC_BLUE, PLC_GREEN, PLC_NOCOLOR
+	PLC_RED = 0, PLC_YELLOW = 1, PLC_BLUE = 2, PLC_GREEN = 3, PLC_NOCOLOR = 4
 };
 
 enum StandCardType {
@@ -25,6 +25,14 @@ enum {
 
 enum {
 	BOARD_SIZE = 13, CARD_TYPES = 11
+};
+
+enum {
+	ACT_MOVE_PIRATE = 1, ACT_MOVE_SHIP = 2, ACT_FIN_GAME = 3
+};
+
+enum MoveTypes {
+	MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT
 };
 
 #endif

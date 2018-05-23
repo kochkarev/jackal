@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #include "card.hpp"
 #include "constants.hpp"
@@ -6,8 +7,9 @@
 
 int main() {
 
-	GameBoard board;
-	board.print_board();
+	srand(time(0));
+	GameSession game;
+	game.start();
 
 	return 0; 
 }

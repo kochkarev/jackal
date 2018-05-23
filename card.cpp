@@ -161,16 +161,16 @@ ShipCard::ShipCard(PlayerColor color, int row, int col) {
 void ShipCard::print_card_up() {
 	switch (ship_color) {
 		case PLC_RED:
-			std::cout << "\033[0;31m|SHP|\033[0m";
+			std::cout << "|\033[0;31mSHP\033[0m|";
 			break;
 		case PLC_YELLOW:
-			std::cout << "\033[1;33m|SHP|\033[0m";
+			std::cout << "|\033[1;33mSHP\033[0m|";
 			break;
 		case PLC_BLUE:
-			std::cout << "\033[0;34m|SHP|\033[0m";
+			std::cout << "|\033[0;34mSHP\033[0m|";
 			break;
 		case PLC_GREEN:
-			std::cout << "\033[0;32m|SHP|\033[0m";
+			std::cout << "|\033[0;32mSHP\033[0m|";
 			break;
 		case PLC_NOCOLOR:
 			std::cout << "|SHP|";
