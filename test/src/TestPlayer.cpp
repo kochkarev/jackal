@@ -1,4 +1,4 @@
-#include "TestPlayer.hpp"
+#include "../include/TestPlayer.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestPlayer);
 

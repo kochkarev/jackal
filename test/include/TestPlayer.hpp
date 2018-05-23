@@ -3,7 +3,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "player.hpp"
+#include "../../include/player.hpp"
 
 class TestPlayer : public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(TestPlayer);
