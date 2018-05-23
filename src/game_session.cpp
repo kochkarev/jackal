@@ -6,10 +6,12 @@
 
 void GameSession::register_players() {
 	std::string name;
-	do {
-		std::cout << "Enter the number of players (2 to 4): ";
-		std::cin >> players_num;
-	} while (players_num != 2 && players_num != 3 && players_num != 4);
+	std::cout << "Enter the number of players (2 to 4): ";
+	while (!(std::cin >> players_num) || (std::cin.peek() != '\n') || (players_num != 2 && players_num != 3 && players_num != 4)) {
+		std::cin.clear();
+		std::cin.ignore(256, '\n');
+		std::cout << "Reenter the number of players (2 to 4): ";
+	}
 	for (int i = 0; i < players_num; i++) {
 		std::cout << "Enter the name of player #" << i + 1 << ": ";
 		std::cin >> name;
@@ -37,8 +39,8 @@ void GameSession::register_players() {
 
 void GameSession::start() { // TODO
 	int turn = 0;
-	int act;
-	char move;
+	int act = 0;
+	std::string move;
 	bool move_poss;
 	MoveTypes move_type;
 	register_players();
@@ -55,36 +57,39 @@ void GameSession::start() { // TODO
 		std::cout << "  3. Finish game" << std::endl;
 		do {
 			std::cout << "Enter your action (1 to 3): ";
+			std::cin.clear();
+			std::cin.ignore(256, '\n');
 			std::cin >> act;
 		} while (act != ACT_MOVE_PIRATE && act != ACT_MOVE_SHIP && act != ACT_FIN_GAME);
 		switch (act) {
 			case ACT_MOVE_PIRATE:
-
 					// choosing the pirate
-					
 					do {
 						std::cout << "Use W A S D to move the pirate: ";
 						std::cin >> move;
-					} while (move != 'w' && move != 'a' && move != 's' && move != 'd');
-
+					} while (move != "w" && move != "a" && move != "s" && move != "d");
 					// performing action
 				break;
 			case ACT_MOVE_SHIP:
 					do {
 						std::cout << "Use W A S D to move the ship: ";
 						std::cin >> move;
-						switch (move) {
+						switch (move[0]) {
 							case 'w':
+								std::cout << "YOU ASKED FOR MOVING UP" << std::endl;
 								move_type = MOVE_UP;
 								break;
 							case 'a':
 								move_type = MOVE_LEFT;
+								std::cout << "YOU ASKED FOR MOVING LEFT" << std::endl;
 								break;
 							case 's':
 								move_type = MOVE_DOWN;
+								std::cout << "YOU ASKED FOR MOVING DOWN" << std::endl;
 								break;
 							case 'd':
 								move_type = MOVE_RIGHT;
+								std::cout << "YOU ASKED FOR MOVING RIGHT" << std::endl;
 								break;
 							default:
 								std::cout << "Wrong command. Repeat" << std::endl;

@@ -32,7 +32,7 @@ enum {
 };
 
 enum MoveTypes {
-	MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT
+	MOVE_UP = 11, MOVE_DOWN = 22, MOVE_LEFT = 33, MOVE_RIGHT = 44
 };
 
 #endif
