@@ -37,15 +37,14 @@ void GameBoard::generate_board() {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (card_allowed_pos(i ,j)) {
 				do {
-					tmp_card = rand() % CARD_TYPES;
+
+					tmp_card = (rand() + 123456) % CARD_TYPES;
+
 				} while (left_cards[tmp_card] <= 0);
 				left_cards[tmp_card]--;
 				switch (tmp_card) {
 					case EMPTY:
 						board[i * BOARD_SIZE + j] = std::make_shared<StandCard>(SC_EMPTY, i, j);
-						break;
-					case FORTRESS: 
-						board[i * BOARD_SIZE + j] = std::make_shared<StandCard>(SC_FORTRESS, i, j);
 						break;
 					case CHEST1: 
 						board[i * BOARD_SIZE + j] = std::make_shared<StandCard>(SC_CHEST1, i, j);
@@ -104,7 +103,6 @@ void GameBoard::generate_board() {
 std::map<unsigned, int> GameBoard::fill_cards_map() {
 	std::map<unsigned, int> left_cards;
 	left_cards.insert(std::make_pair(EMPTY, CARDS_EMPT));
-	left_cards.insert(std::make_pair(FORTRESS, CARDS_FRT));
 	left_cards.insert(std::make_pair(CHEST1, CARDS_CH1));
 	left_cards.insert(std::make_pair(CHEST2, CARDS_CH2));
 	left_cards.insert(std::make_pair(CHEST3, CARDS_CH3));

@@ -10,11 +10,12 @@ class Player;
 
 class Pirate {
 public:
-	Pirate(std::pair<int, int> new_pos, PlayerColor color) : pos(new_pos), pirate_color(color) {}
+	Pirate(std::pair<int, int> new_pos, PlayerColor color, int num_) : pos(new_pos), pirate_color(color), num(num_) {}
 	bool is_alive() { return alive; }
 	bool has_coin() { return carry_coin; }
 	bool has_treasure() { return carry_treasure; }
 	bool is_on_ship() { return on_ship; }
+	int get_num() { return num; }
 	std::pair<int, int> get_pos() { return pos; }
 	PlayerColor get_color() { return pirate_color; }
 	void set_pos(int row, int col) { pos = std::make_pair(row, col); }
@@ -34,6 +35,7 @@ public:
 private:
 	std::pair<int, int> pos;
 	PlayerColor pirate_color;
+	int num;
 	Player *player_ptr;
 	bool alive = true;
 	bool carry_coin = false;

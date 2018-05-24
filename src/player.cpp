@@ -32,7 +32,7 @@ Player::Player(const std::string& name, PlayerColor color) {
 			break;
 	}
 	for (int i = 0; i < 3; i++) {
-		pirates[i] = std::make_unique<Pirate>(ship_pos, color);
+		pirates[i] = std::make_unique<Pirate>(ship_pos, color, i);
 	}
 }
 
@@ -161,13 +161,10 @@ bool Player::move_ship(MoveTypes type) {
 }
 
 bool Player::move_pirate(MoveTypes type, int num) {  
-	//std::cout << "going to move the pirate" << std::endl;
 	game_board->get_card(pirates[num]->get_pos().first, pirates[num]->get_pos().second)->remove_pirate();
-	//std::cout << "pirate removed\n";
 	if (!pirates[num]->move(type)) {
 		return false;
 	}
-	//std::cout << "Player::move_pirate() going to make action\n";
 	game_board->get_card(pirates[num]->get_pos().first, pirates[num]->get_pos().second)->action(*pirates[num]);
 	return true;
 }
