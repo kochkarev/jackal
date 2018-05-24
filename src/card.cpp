@@ -90,18 +90,14 @@ void NoStandCard::action(Pirate& pirate) {
 	switch (nscard_type) {
 		case NSC_ARRUP:
 			pirate.get_player_ptr()->move_pirate(MOVE_UP, pirate.get_num());
-			//pirate.move(MOVE_UP);
 			break;
 		case NSC_ARRDOWN:
-			//pirate.move(MOVE_DOWN);
 			pirate.get_player_ptr()->move_pirate(MOVE_DOWN, pirate.get_num());
 			break;
 		case NSC_ARRLEFT:
-			//pirate.move(MOVE_LEFT);
 			pirate.get_player_ptr()->move_pirate(MOVE_LEFT, pirate.get_num());
 			break;
 		case NSC_ARRRIGHT:
-			//pirate.move(MOVE_RIGHT);
 			pirate.get_player_ptr()->move_pirate(MOVE_RIGHT, pirate.get_num());
 			break;
 		case NSC_MANEATER:
@@ -193,8 +189,7 @@ void StandCard::print_card_down() {
 	}
 }
 
-void StandCard::action(Pirate &pirate) { // TODO
-	std::cout << "HAHA" << std::endl;
+void StandCard::action(Pirate &pirate) { 
 	pirates_color = pirate.get_color();
 	pirates_cnt++;
 	switch(scard_type) {
