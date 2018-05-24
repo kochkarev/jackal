@@ -8,6 +8,7 @@ class Card {
 public:
 	void open_card();
 	bool is_opened() const { return opened; }
+	//virtual CardType get_type() const { return gen_type; }
 	virtual void print_card_up() = 0;
 	virtual void print_card_down() = 0;
 protected:

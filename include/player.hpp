@@ -1,6 +1,8 @@
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
+#include <array>
+
 #include "gameboard.hpp"
 #include "card.hpp"
 #include "constants.hpp"
@@ -47,12 +49,14 @@ public:
 private:
 	std::string player_name;
 	PlayerColor player_color;
-	std::tuple<std::unique_ptr<Pirate>, std::unique_ptr<Pirate>, std::unique_ptr<Pirate>> pirates;
+	//std::tuple<std::unique_ptr<Pirate>, std::unique_ptr<Pirate>, std::unique_ptr<Pirate>> pirates;
+	std::array<std::unique_ptr<Pirate>, 3> pirates;
 	std::pair<int, int> ship_pos;
 	std::shared_ptr<GameBoard> game_board;
 	int pirates_cnt = 3;
 	int coins_on_ship = 0;
 	bool check_ship_move(MoveTypes type);
+	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type);
 	friend class TestPlayer;
 };
 
