@@ -40,6 +40,7 @@ void GameSession::register_players() {
 void GameSession::start() { // TODO
 	int turn = 0;
 	int act = 0;
+	int pirate_move;
 	std::string move;
 	bool move_poss;
 	MoveTypes move_type;
@@ -50,7 +51,7 @@ void GameSession::start() { // TODO
 	}
 	while(true) {
 		board_ptr->print_board();
-		players[turn].print_info();
+		players[turn].print_general_info();
 		std::cout << "Choose action: " << std::endl;
 		std::cout << "  1. Move pirate" << std::endl;
 		std::cout << "  2. Move ship" << std::endl;
@@ -63,12 +64,39 @@ void GameSession::start() { // TODO
 		} while (act != ACT_MOVE_PIRATE && act != ACT_MOVE_SHIP && act != ACT_FIN_GAME);
 		switch (act) {
 			case ACT_MOVE_PIRATE:
-					// choosing the pirate
+					std::cout << "Choose one of your pirates:" << std::endl;
+					players[turn].print_pirates_info();
+					do {
+						do {
+							std::cout << "Enter your choice (1 to 3): ";
+							std::cin.clear();
+							std::cin.ignore(256, '\n');
+							std::cin >> pirate_move;
+						} while (pirate_move != 1 && pirate_move != 2 && pirate_move != 3);
+					} while (!players[turn].alive_pirate(pirate_move - 1));
 					do {
 						std::cout << "Use W A S D to move the pirate: ";
 						std::cin >> move;
 					} while (move != "w" && move != "a" && move != "s" && move != "d");
-					// performing action
+					switch (move[0]) {
+						case 'w':
+							move_type = MOVE_UP;
+							break;
+						case 'a':
+							move_type = MOVE_LEFT;
+							break;
+						case 's':
+							move_type = MOVE_DOWN;
+							break;
+						case 'd':
+							move_type = MOVE_RIGHT;
+							break;
+						default:
+							std::cout << "Wrong command. Repeat" << std::endl;
+					}
+					if (!players[turn].move_pirate(move_type, pirate_move)) {
+						std::cout << "Your pirate died" << std::endl;
+					}
 				break;
 			case ACT_MOVE_SHIP:
 					do {
@@ -76,20 +104,16 @@ void GameSession::start() { // TODO
 						std::cin >> move;
 						switch (move[0]) {
 							case 'w':
-								std::cout << "YOU ASKED FOR MOVING UP" << std::endl;
 								move_type = MOVE_UP;
 								break;
 							case 'a':
 								move_type = MOVE_LEFT;
-								std::cout << "YOU ASKED FOR MOVING LEFT" << std::endl;
 								break;
 							case 's':
 								move_type = MOVE_DOWN;
-								std::cout << "YOU ASKED FOR MOVING DOWN" << std::endl;
 								break;
 							case 'd':
 								move_type = MOVE_RIGHT;
-								std::cout << "YOU ASKED FOR MOVING RIGHT" << std::endl;
 								break;
 							default:
 								std::cout << "Wrong command. Repeat" << std::endl;
@@ -106,6 +130,9 @@ void GameSession::start() { // TODO
 
 		std::cout << "The turn is finished" << std::endl;
 		turn = (turn + 1) % players_num;
+		if (finished) {
+			break;
+		}
 	}
 	std::cout << "The game is finished. Winner is " << win_player << std::endl;
 }

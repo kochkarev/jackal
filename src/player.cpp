@@ -4,6 +4,8 @@
 
 #include "player.hpp"
 
+std::ostream& operator<<(std::ostream &os, const std::pair<int, int> op);
+
 Player::Player(const std::string& name, PlayerColor color) {
 	player_name = name;
 	player_color = color;
@@ -24,9 +26,13 @@ Player::Player(const std::string& name, PlayerColor color) {
 		default:
 			break;
 	}
+	pirates = std::make_tuple(std::make_unique<Pirate>(ship_pos), std::make_unique<Pirate>(ship_pos), std::make_unique<Pirate>(ship_pos));
+	//std::get<0>(pirates)->set_player_ptr(this);
+	//std::get<1>(pirates)->set_player_ptr(this);
+	//std::get<2>(pirates)->set_player_ptr(this);
 }
 
-void Player::print_info() {
+void Player::print_general_info() {
 	switch (player_color) {
 		case PLC_RED:
 			std::cout << "\033[0;31m" << player_name << "\033[0m";
@@ -44,8 +50,24 @@ void Player::print_info() {
 		default:
 			break;
 	}
-	std::cout << std::endl << pirates_cnt << " pirates" << std::endl;
-	std::cout << coins_on_ship << " coins on ship" << std::endl;
+	std::cout << std::endl << "Pirates: " << pirates_cnt << std::endl;
+	std::cout << "Coins on ship: " << coins_on_ship << std::endl;
+}
+
+void Player::print_pirates_info() {
+	int i = 1;
+	if (std::get<0>(pirates)->is_alive()) {
+		std::cout << "  " << i << ". " << std::get<0>(pirates)->get_pos() << std::endl;
+		i++;
+	}
+	if (std::get<1>(pirates)->is_alive()) {
+		std::cout << "  " << i << ". " << std::get<1>(pirates)->get_pos() << std::endl;
+		i++;
+	}
+	if (std::get<2>(pirates)->is_alive()) {
+		std::cout << "  " << i++ << ". " << std::get<2>(pirates)->get_pos() << std::endl;
+		i++;
+	}
 }
 
 bool Player::check_ship_move(MoveTypes type) {
@@ -53,7 +75,6 @@ bool Player::check_ship_move(MoveTypes type) {
 		case MOVE_UP:
 			if (ship_pos.second == 0 || ship_pos.second == BOARD_SIZE - 1) {
 				if (ship_pos.first > 2 && ship_pos.first < BOARD_SIZE - 2) {
-					std::cout << "POSSIBLE TO MOVE UP" << std::endl;
 					return true;
 				}
 			} 
@@ -61,7 +82,6 @@ bool Player::check_ship_move(MoveTypes type) {
 		case MOVE_DOWN:
 			if (ship_pos.second == 0 || ship_pos.second == BOARD_SIZE - 1) {
 				if (ship_pos.first > 1 && ship_pos.first < BOARD_SIZE - 3) {
-					std::cout << "POSSIBLE TO MOVE DOWN" << std::endl;
 					return true;
 				}
 			}
@@ -69,7 +89,6 @@ bool Player::check_ship_move(MoveTypes type) {
 		case MOVE_LEFT:
 			if (ship_pos.first == 0 || ship_pos.first == BOARD_SIZE - 1) {
 				if (ship_pos.second > 2 && ship_pos.second < BOARD_SIZE - 2) {
-					std::cout << "POSSIBLE TO MOVE LEFT" << std::endl;
 					return true;
 				}
 			}
@@ -77,7 +96,6 @@ bool Player::check_ship_move(MoveTypes type) {
 		case MOVE_RIGHT:
 			if (ship_pos.first == 0 || ship_pos.first == BOARD_SIZE - 1) {
 				if (ship_pos.second > 1 && ship_pos.second < BOARD_SIZE - 3) {
-					std::cout << "POSSIBLE TO MOVE RIGHT" << std::endl;
 					return true;
 				}
 			}
@@ -92,25 +110,55 @@ bool Player::move_ship(MoveTypes type) {
 	}
 	switch (type) {
 		case MOVE_UP:
-			std::cout << "MOVING UP" << std::endl;
 			game_board->swap_cards(ship_pos, std::make_pair(ship_pos.first - 1, ship_pos.second));
 			set_ship_pos(ship_pos.first - 1, ship_pos.second);
 			break;
 		case MOVE_DOWN:
-			std::cout << "MOVING DOWN" << std::endl;
 			game_board->swap_cards(ship_pos, std::make_pair(ship_pos.first + 1, ship_pos.second));
 			set_ship_pos(ship_pos.first + 1, ship_pos.second);
 			break;
 		case MOVE_LEFT:
-			std::cout << "MOVING LEFT" << std::endl;
 			game_board->swap_cards(ship_pos, std::make_pair(ship_pos.first, ship_pos.second - 1));
 			set_ship_pos(ship_pos.first, ship_pos.second - 1);
 			break;
 		case MOVE_RIGHT:
-			std::cout << "MOVING RIGHT" << std::endl;
 			game_board->swap_cards(ship_pos, std::make_pair(ship_pos.first, ship_pos.second + 1));
 			set_ship_pos(ship_pos.first, ship_pos.second + 1);
 			break;
 	}
 	return true;
 }
+
+bool Player::move_pirate(MoveTypes type, int num) { // true == alive
+	
+	return true;
+}
+
+bool Player::alive_pirate(int num) {
+	switch (num) {
+		case 0:
+			return std::get<0>(pirates)->is_alive();
+		case 1:
+			return std::get<1>(pirates)->is_alive();
+		case 2:
+			return std::get<2>(pirates)->is_alive();
+		default:
+			return false;
+	}
+}
+
+std::ostream& operator<<(std::ostream &os, const std::pair<int, int> op) {
+	os << "(" << op.first << " ; " << op.second << ")";
+	return os;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -82,10 +82,23 @@ void GameBoard::generate_board() {
 			}
 		}
 	}
-	board[6] = std::make_shared<ShipCard>(PLC_RED, 0, 6);
-	board[6 * BOARD_SIZE] = std::make_shared<ShipCard>(PLC_GREEN, 6, 0);
-	board[(BOARD_SIZE - 1) * BOARD_SIZE + 6] = std::make_shared<ShipCard>(PLC_BLUE, BOARD_SIZE - 1, 6);
-	board[6 * BOARD_SIZE + BOARD_SIZE - 1] = std::make_shared<ShipCard>(PLC_YELLOW, 6, BOARD_SIZE - 1);
+	switch (players_cnt) {
+		case 2:
+			board[6] = std::make_shared<ShipCard>(PLC_RED, 0, 6);
+			board[6 * BOARD_SIZE + BOARD_SIZE - 1] = std::make_shared<ShipCard>(PLC_YELLOW, 6, BOARD_SIZE - 1);
+			break;		
+		case 3:
+			board[6] = std::make_shared<ShipCard>(PLC_RED, 0, 6);
+			board[6 * BOARD_SIZE + BOARD_SIZE - 1] = std::make_shared<ShipCard>(PLC_YELLOW, 6, BOARD_SIZE - 1);
+			board[(BOARD_SIZE - 1) * BOARD_SIZE + 6] = std::make_shared<ShipCard>(PLC_BLUE, BOARD_SIZE - 1, 6);
+			break;
+		case 4:
+			board[6] = std::make_shared<ShipCard>(PLC_RED, 0, 6);
+			board[6 * BOARD_SIZE] = std::make_shared<ShipCard>(PLC_GREEN, 6, 0);
+			board[(BOARD_SIZE - 1) * BOARD_SIZE + 6] = std::make_shared<ShipCard>(PLC_BLUE, BOARD_SIZE - 1, 6);
+			board[6 * BOARD_SIZE + BOARD_SIZE - 1] = std::make_shared<ShipCard>(PLC_YELLOW, 6, BOARD_SIZE - 1);
+			break;
+	}
 }
 
 std::map<unsigned, int> GameBoard::fill_cards_map() {
@@ -122,15 +135,3 @@ bool GameBoard::card_allowed_pos(int row, int col) {
 void GameBoard::swap_cards(std::pair<int, int> op1, std::pair<int, int> op2) {
 	board[op1.first * BOARD_SIZE + op1.second].swap(board[op2.first * BOARD_SIZE + op2.second]);
 }
-
-/*
-
-  |EMP| |CST| | |-->| |^ ^| |
-  |2 *| |0 3| | |-->| || || |
-  ------------|-------
-  |MEN| |   | | |SHP|
-  |EAT| |   | | |1  |          
-  ------------|------- 
-
-
-  */
