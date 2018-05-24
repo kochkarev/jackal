@@ -7,6 +7,7 @@
 
 class TestPlayer : public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(TestPlayer);
+	CPPUNIT_TEST(testInit);
 	CPPUNIT_TEST(test_check_ship_move);
 	CPPUNIT_TEST_SUITE_END();
 public:
