@@ -12,6 +12,7 @@ class Card {
 public:
 	void open_card();
 	bool is_opened() const { return opened; }
+	virtual bool remove_pirate() { return true; }
 	virtual void print_card_up() = 0;
 	virtual void print_card_down() = 0;
 	virtual void action(Pirate &pirate) = 0;
@@ -25,7 +26,7 @@ public:
 	NoCard(int row, int col) { card_pos = std::make_pair(row, col); }
 	virtual void print_card_up();
 	virtual void print_card_down();
-	virtual void action(Pirate &pirate); // kill pirate
+	virtual void action(Pirate &pirate); 
 };
 
 class NoStandCard : public Card {
@@ -33,7 +34,7 @@ public:
 	NoStandCard(NoStandCardType type, int row, int col);
 	virtual void print_card_up();
 	virtual void print_card_down();
-	virtual void action(Pirate &pirate); // kill or move pirate;
+	virtual void action(Pirate &pirate); 
 private:
 	NoStandCardType nscard_type;
 };
@@ -43,7 +44,8 @@ public:
 	StandCard(StandCardType type, int row, int col);
 	virtual void print_card_up();
 	virtual void print_card_down();
-	virtual void action(Pirate &pirate); // nothing special
+	virtual void action(Pirate &pirate); 
+	virtual bool remove_pirate() override;
 private:
 	StandCardType scard_type;
 	std::string card_tag;
@@ -60,9 +62,10 @@ public:
 	virtual void print_card_up();
 	virtual void print_card_down();
 	virtual void action(Pirate& pirate);
+	virtual bool remove_pirate() override;
 private:
 	PlayerColor ship_color;
-	int pirates_cnt;
+	int pirates_cnt = 3;
 };
 
 #endif

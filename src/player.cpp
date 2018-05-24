@@ -59,7 +59,14 @@ void Player::print_general_info() {
 void Player::print_pirates_info() {
 	for (int i = 0; i < 3; i++) {
 		if (pirates[i]->is_alive()) {
-			std::cout << "  " << i + 1 << ". " << pirates[i]->get_pos() << std::endl;
+			std::cout << "  " << i + 1 << ". " << pirates[i]->get_pos();
+			if (pirates[i]->has_coin()) {
+				std::cout << " carrying 1 coin" << std::endl;
+			} else if (pirates[i]->has_treasure()) {
+				std::cout << " carrying treasure" << std::endl;
+			} else {
+				std::cout << std::endl;
+			}
 		}
 	}
 }
@@ -143,11 +150,18 @@ bool Player::move_ship(MoveTypes type) {
 	std::pair<int, int> tmp = new_pos(ship_pos, type);
 	game_board->swap_cards(ship_pos, tmp);
 	set_ship_pos(tmp.first, tmp.second);
+	for (int i = 0; i < 3; i++) {
+		if (pirates[i]->is_on_ship()) {
+			pirates[i]->set_pos(tmp.first, tmp.second);
+		}
+	}
 	return true;
 }
 
 bool Player::move_pirate(MoveTypes type, int num) {  
 	std::cout << "going to move the pirate" << std::endl;
+	game_board->get_card(pirates[num]->get_pos().first, pirates[num]->get_pos().second)->remove_pirate();
+	std::cout << "pirate removed\n";
 	if (!pirates[num]->move(type)) {
 		return false;
 	}
@@ -187,6 +201,14 @@ void Pirate::put_coin_on_ship() {
 	carry_coin = false;
 }
 
+void Pirate::put_treasure_on_ship() {
+	player_ptr->inc_coins();
+	player_ptr->inc_coins();
+	player_ptr->inc_coins();
+	player_ptr->inc_coins();
+	player_ptr->inc_coins();
+	carry_treasure = false;
+}
 
 
 

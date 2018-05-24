@@ -93,18 +93,23 @@ void NoStandCard::action(Pirate& pirate) {
 	std::cout << "NoStandCard::action() " << std::endl;
 	switch (nscard_type) {
 		case NSC_ARRUP:
+			pirate.move(MOVE_UP);
 			break;
 		case NSC_ARRDOWN:
+			pirate.move(MOVE_DOWN);
 			break;
 		case NSC_ARRLEFT:
+			pirate.move(MOVE_LEFT);
 			break;
 		case NSC_ARRRIGHT:
+			pirate.move(MOVE_RIGHT);
 			break;
-		case MANEATER:
+		case NSC_MANEATER:
 			pirate.kill();
  			pirate.throw_coin();
  			pirate.throw_treasure();
  			pirate.go_from_ship();
+ 			pirate.get_player_ptr()->dec_pirates();
 			break;
 	}
 }
@@ -145,7 +150,24 @@ StandCard::StandCard(StandCardType type, int row, int col) {
 
 void StandCard::print_card_up() {
 	if (opened) {
-		std::cout << "|" << card_tag << "|";
+		switch(pirates_color) {
+			case PLC_RED:
+				std::cout << "|\033[0;31m" << card_tag << "\033[0m|";
+				break;
+			case PLC_YELLOW:
+				std::cout << "|\033[1;33m" << card_tag << "\033[0m|";
+				break;
+			case PLC_BLUE:
+				std::cout << "|\033[0;34m" << card_tag << "\033[0m|";
+				break;
+			case PLC_GREEN:
+				std::cout << "|\033[0;32m" << card_tag << "\033[0m|";
+				break;
+			case PLC_NOCOLOR:
+			default:
+				std::cout << "|" << card_tag << "|";
+				break;
+		}
 	} else {
 		std::cout << "|CLO|";
 	}
@@ -174,6 +196,44 @@ void StandCard::print_card_down() {
 
 void StandCard::action(Pirate &pirate) { // TODO
 	std::cout << "HAHA" << std::endl;
+	pirates_color = pirate.get_color();
+	pirates_cnt++;
+	switch(scard_type) {
+		case SC_EMPTY:
+			std::cout << "Just an empty card" << std::endl;
+			break;
+		case SC_FORTRESS:
+			break;
+		case SC_TREASURE:
+			if (!pirate.has_coin() && !pirate.has_treasure() && treasure) {
+				treasure = false;
+				pirate.take_treasure();
+			}
+			break;
+		case SC_CHEST1:
+		case SC_CHEST2:
+		case SC_CHEST3:
+			if (!pirate.has_coin() && !pirate.has_treasure() && (coins_left > 0)) {
+				coins_left--;
+				pirate.take_coin();
+			}
+			break;
+	}
+}
+
+bool StandCard::remove_pirate() {
+	pirates_cnt--;
+	std::cout << "REMOVING PIRATE FROM CARD\n";
+	if (pirates_cnt == 0) {
+		pirates_color = PLC_NOCOLOR;
+	}
+	return true;
+}
+
+bool ShipCard::remove_pirate() {
+	std::cout << "REMOVING PIRATE FROM SHIP\n";
+	pirates_cnt--;
+	return true;
 }
 
 ShipCard::ShipCard(PlayerColor color, int row, int col) {
@@ -203,37 +263,45 @@ void ShipCard::print_card_up() {
 	}
 }
 
- void ShipCard::print_card_down() {
- 	std::cout << "|" << pirates_cnt << "  |";
- }
+void ShipCard::print_card_down() { 
+	std::cout << "|" << pirates_cnt << "  |";
+}
 
- void ShipCard::action(Pirate& pirate) {
- 	if (pirate.get_color() != ship_color) {
- 		std::cout << "GOT ON WRONG SHIP" << std::endl;
- 		pirate.kill();
- 		pirate.throw_coin();
- 		pirate.throw_treasure();
- 	} else {
- 		pirate.put_coin_on_ship();
- 		std::cout << "GOT ON RIGHT SHIP" << std::endl;
- 	}
- }
+void ShipCard::action(Pirate& pirate) {
+	if (pirate.get_color() != ship_color) {
+		std::cout << "GOT ON WRONG SHIP" << std::endl;
+		pirate.kill();
+		pirate.throw_coin();
+		pirate.throw_treasure();
+		pirate.get_player_ptr()->dec_pirates();
+	} else {
+		if (pirate.has_coin()) {
+			pirate.put_coin_on_ship();
+		} else if (pirate.has_treasure()) {
+			pirate.put_treasure_on_ship();
+		}
+		pirate.go_on_ship();
+		pirates_cnt++;
+		std::cout << "GOT ON RIGHT SHIP" << std::endl;
+	}
+}
 
- void NoCard::action(Pirate& pirate) {
- 	std::cout << "FALL IN WATER!" << std::endl;
- 	pirate.kill();
- 	pirate.throw_coin();
- 	pirate.throw_treasure();
- 	pirate.go_from_ship();
- }
+void NoCard::action(Pirate& pirate) {
+	std::cout << "FALL IN WATER!" << std::endl;
+	pirate.kill();
+	pirate.throw_coin();
+	pirate.throw_treasure();
+	pirate.go_from_ship();
+	pirate.get_player_ptr()->dec_pirates();
+}
 
- void NoCard::print_card_up() {
- 	std::cout << "|   |";
- }
+void NoCard::print_card_up() {
+	std::cout << "|   |";
+}
 
- void NoCard::print_card_down() {
- 	std::cout << "|   |";
- }
+void NoCard::print_card_down() {
+	std::cout << "|   |";
+}
 
 
 

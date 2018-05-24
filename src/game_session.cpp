@@ -130,9 +130,25 @@ void GameSession::start() {
 
 		std::cout << "The turn is finished" << std::endl;
 		turn = (turn + 1) % players_num;
+		check_if_finished();
 		if (finished) {
 			break;
 		}
 	}
 	std::cout << "The game is finished. Winner is " << win_player << std::endl;
 }
+
+void GameSession::check_if_finished() {
+	int coins_sum = 0;
+	for (int i = 0; i < players_num; i++) {
+		coins_sum += players[i].get_coins();
+		if (players[i].get_pirates() == 0) {
+			finished = true;
+		}
+	}
+	if (coins_sum == COINS_ATALL) {
+		finished = true;
+	}
+}
+
+

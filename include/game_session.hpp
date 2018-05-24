@@ -18,6 +18,7 @@ private:
 	std::vector<Player> players;
 	std::shared_ptr<GameBoard> board_ptr;
 	void register_players();
+	void check_if_finished();
 	friend class TestGameSession;
 };
 

@@ -26,8 +26,10 @@ public:
 	void go_on_ship() { on_ship = true; }
 	void go_from_ship() { on_ship = false; }
 	void put_coin_on_ship();
+	void put_treasure_on_ship();
 	bool check_move(MoveTypes type);
 	bool move(MoveTypes type);
+	Player *get_player_ptr() { return player_ptr; }
 private:
 	std::pair<int, int> pos;
 	PlayerColor pirate_color;

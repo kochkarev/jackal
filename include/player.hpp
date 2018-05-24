@@ -16,9 +16,12 @@ public:
 	void set_ship_pos(int row, int col) { ship_pos = std::make_pair(row, col); }
 	void set_board(std::shared_ptr<GameBoard> board) { game_board = board; }
 	void inc_coins() { coins_on_ship++; }
+	void dec_pirates() { pirates_cnt--; }
 	bool move_pirate(MoveTypes type, int num); // TODO
 	bool move_ship(MoveTypes type);
 	bool alive_pirate(int num);
+	int get_pirates() { return pirates_cnt; }
+	int get_coins() { return coins_on_ship; }
 	std::shared_ptr<GameBoard> get_board() { return game_board; }
 private:
 	std::string player_name;
