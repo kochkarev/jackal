@@ -12,6 +12,8 @@ std::ostream& operator<<(std::ostream &os, const std::pair<int, int> op);
 Player::Player(const std::string& name, PlayerColor color) {
 	player_name = name;
 	player_color = color;
+	pirates_cnt = 3;
+	coins_on_ship = 0;
 	switch (color) {
 		case PLC_RED:
 			ship_pos = std::make_pair(0, 6);
@@ -30,7 +32,7 @@ Player::Player(const std::string& name, PlayerColor color) {
 			break;
 	}
 	for (int i = 0; i < 3; i++) {
-		pirates[i] = std::make_unique<Pirate>(ship_pos, color, this);
+		pirates[i] = std::make_unique<Pirate>(ship_pos, color);
 	}
 }
 
@@ -159,19 +161,25 @@ bool Player::move_ship(MoveTypes type) {
 }
 
 bool Player::move_pirate(MoveTypes type, int num) {  
-	std::cout << "going to move the pirate" << std::endl;
+	//std::cout << "going to move the pirate" << std::endl;
 	game_board->get_card(pirates[num]->get_pos().first, pirates[num]->get_pos().second)->remove_pirate();
-	std::cout << "pirate removed\n";
+	//std::cout << "pirate removed\n";
 	if (!pirates[num]->move(type)) {
 		return false;
 	}
-	std::cout << "Player::move_pirate() going to make action\n";
+	//std::cout << "Player::move_pirate() going to make action\n";
 	game_board->get_card(pirates[num]->get_pos().first, pirates[num]->get_pos().second)->action(*pirates[num]);
 	return true;
 }
 
 bool Player::alive_pirate(int num) {
 	return pirates[num]->is_alive();
+}
+
+void Player::fix_pirates(Player *ptr) {
+	for (int i = 0; i < 3; i++) {
+		pirates[i]->set_player_ptr(ptr);
+	}
 }
 
 std::ostream& operator<<(std::ostream &os, const std::pair<int, int> op) {
@@ -192,7 +200,6 @@ bool Pirate::move(MoveTypes type) {
 		return false;
 	}
 	pos = new_pos(pos, type);
-	//std::cout << "Pirate::move -> position set to " << pos <<" , going to move" << std::endl;
 	return true;
 }
 

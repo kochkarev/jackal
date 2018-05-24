@@ -34,6 +34,9 @@ void GameSession::register_players() {
 				break;
 		}
 	}
+	for (int i = 0; i < players_num; i++) {
+		players[i].fix_pirates(&(players[i]));
+	}
 	std::cout << "Registration finished" << std::endl;
 }
 

@@ -10,7 +10,7 @@ class Player;
 
 class Pirate {
 public:
-	Pirate(std::pair<int, int> new_pos, PlayerColor color, Player *ptr) : pos(new_pos), pirate_color(color), player_ptr(ptr) {}
+	Pirate(std::pair<int, int> new_pos, PlayerColor color) : pos(new_pos), pirate_color(color) {}
 	bool is_alive() { return alive; }
 	bool has_coin() { return carry_coin; }
 	bool has_treasure() { return carry_treasure; }
@@ -27,6 +27,7 @@ public:
 	void go_from_ship() { on_ship = false; }
 	void put_coin_on_ship();
 	void put_treasure_on_ship();
+	void set_player_ptr(Player *ptr) { player_ptr = ptr; }
 	bool check_move(MoveTypes type);
 	bool move(MoveTypes type);
 	Player *get_player_ptr() { return player_ptr; }
