@@ -3,7 +3,9 @@
 #include <memory>
 #include <array>
 
+#include "pirate.hpp"
 #include "player.hpp"
+
 
 std::ostream& operator<<(std::ostream &os, const std::pair<int, int> op);
 
@@ -28,7 +30,7 @@ Player::Player(const std::string& name, PlayerColor color) {
 			break;
 	}
 	for (int i = 0; i < 3; i++) {
-		pirates[i] = std::make_unique<Pirate>(ship_pos);
+		pirates[i] = std::make_unique<Pirate>(ship_pos, color, this);
 	}
 }
 
@@ -96,7 +98,30 @@ bool Player::check_ship_move(MoveTypes type) {
 	return false;
 }
 
+/*bool Player::check_pirate_move(MoveTypes type, int num) {
+	auto tmp = new_pos(pirates[num]->get_pos(), type);
+	if (tmp.first < 0 || tmp.first > BOARD_SIZE - 1 || tmp.second < 0 || tmp.second > BOARD_SIZE - 1) {
+		return false;
+	}
+	return true;
+}*/
+
 std::pair<int, int> Player::new_pos(std::pair<int, int> pos, MoveTypes type) {
+	switch (type) {
+		case MOVE_UP:
+			return std::make_pair(pos.first - 1, pos.second);
+		case MOVE_DOWN:
+			return std::make_pair(pos.first + 1, pos.second);
+		case MOVE_LEFT:
+			return std::make_pair(pos.first, pos.second - 1);
+		case MOVE_RIGHT:
+			return std::make_pair(pos.first, pos.second + 1);
+		default:
+			throw "err";
+	}
+}
+
+std::pair<int, int> Pirate::new_pos(std::pair<int, int> pos, MoveTypes type) {
 	switch (type) {
 		case MOVE_UP:
 			return std::make_pair(pos.first - 1, pos.second);
@@ -121,10 +146,17 @@ bool Player::move_ship(MoveTypes type) {
 	return true;
 }
 
-bool Player::move_pirate(MoveTypes type, int num) { // true == alive
+bool Player::move_pirate(MoveTypes type, int num) {  // TODO
+	/*if (!check_pirate_move(type, num)) {
+		return false;
+	}
 	std::pair<int, int> prev_pos = pirates[num]->get_pos();
 	std::pair<int, int> cur_pos = new_pos(prev_pos, type);
 	pirates[num]->set_pos(cur_pos.first, cur_pos.second);
+	game_board->board[cur_pos.first * BOARD_SIZE + cur_pos.second].action(pirates[num]);*/
+	if (!pirates[num]->move(type)) {
+		return false;
+	}
 	return true;
 }
 
@@ -136,6 +168,29 @@ std::ostream& operator<<(std::ostream &os, const std::pair<int, int> op) {
 	os << "(" << op.first << " ; " << op.second << ")";
 	return os;
 }
+
+bool Pirate::check_move(MoveTypes type) {
+	auto tmp = new_pos(pos, type);
+	if (tmp.first < 0 || tmp.first > BOARD_SIZE - 1 || tmp.second < 0 || tmp.second > BOARD_SIZE - 1) {
+		return false;
+	}
+	return true;
+}
+
+bool Pirate::move(MoveTypes type) {
+	if (!check_move(type)) {
+		return false;
+	}
+	pos = new_pos(pos, type);
+	//player_ptr->game_board->[pos.first * BOARD_SIZE + cur_pos.second].action(*this);
+	return true;
+}
+
+void Pirate::put_coin_on_ship() {
+	player_ptr->inc_coins(); 
+	carry_coin = false;
+}
+
 
 
 

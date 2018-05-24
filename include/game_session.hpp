@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "player.hpp"
+#include "pirate.hpp"
 #include "gameboard.hpp"
 
 class GameSession {

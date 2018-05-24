@@ -37,7 +37,7 @@ void GameSession::register_players() {
 	std::cout << "Registration finished" << std::endl;
 }
 
-void GameSession::start() { // TODO
+void GameSession::start() { 
 	int turn = 0;
 	int act = 0;
 	int pirate_move;
@@ -77,26 +77,26 @@ void GameSession::start() { // TODO
 					do {
 						std::cout << "Use W A S D to move the pirate: ";
 						std::cin >> move;
-					} while (move != "w" && move != "a" && move != "s" && move != "d");
-					switch (move[0]) {
-						case 'w':
-							move_type = MOVE_UP;
-							break;
-						case 'a':
-							move_type = MOVE_LEFT;
-							break;
-						case 's':
-							move_type = MOVE_DOWN;
-							break;
-						case 'd':
-							move_type = MOVE_RIGHT;
-							break;
-						default:
-							std::cout << "Wrong command. Repeat" << std::endl;
-					}
-					if (!players[turn].move_pirate(move_type, pirate_move)) {
-						std::cout << "Your pirate died" << std::endl;
-					}
+						switch (move[0]) {
+							case 'w':
+								move_type = MOVE_UP;
+								break;
+							case 'a':
+								move_type = MOVE_LEFT;
+								break;
+							case 's':
+								move_type = MOVE_DOWN;
+								break;
+							case 'd':
+								move_type = MOVE_RIGHT;
+								break;
+							default:
+								std::cout << "Wrong command. Repeat" << std::endl;
+						}
+						if (!(move_poss = players[turn].move_pirate(move_type, pirate_move))) {
+							std::cout << "You can not move your pirate in that direction. Repeat" << std::endl;
+						}
+					} while (!move_poss);
 				break;
 			case ACT_MOVE_SHIP:
 					do {

@@ -1,5 +1,6 @@
 #include "card.hpp"
 #include "constants.hpp"
+#include "player.hpp"
 
 void StandCard::set_tag() {
 	switch (scard_type) {
@@ -88,6 +89,25 @@ void NoStandCard::print_card_down() {
 	}
 }
 
+/*void NoStandCard::action(const Pirate& pirate) {
+	switch (nscard_type) {
+		case NSC_ARRUP:
+			break;
+		case NSC_ARRDOWN:
+			break;
+		case NSC_ARRLEFT:
+			break;
+		case NSC_ARRRIGHT:
+			break;
+		case MANEATER:
+			pirate.kill();
+ 			pirate.throw_coin();
+ 			pirate.throw_treasure();
+ 			pirate.go_from_ship();
+			break;
+	}
+}*/
+
 StandCard::StandCard(StandCardType type, int row, int col) {
 	card_pos = std::make_pair(row, col);
 	opened = true;
@@ -151,6 +171,10 @@ void StandCard::print_card_down() {
 	}
 }
 
+//void StandCard::action(const Pirate &pirate) { // TODO
+//
+//}
+
 ShipCard::ShipCard(PlayerColor color, int row, int col) {
 	card_pos = std::make_pair(row, col);
 	ship_color = color;
@@ -181,6 +205,23 @@ void ShipCard::print_card_up() {
  void ShipCard::print_card_down() {
  	std::cout << "|" << pirates_cnt << "  |";
  }
+
+ /*void ShipCard::action(const Pirate& pirate) {
+ 	if (pirate.get_color() != ship_color) {
+ 		pirate.kill();
+ 		pirate.throw_coin();
+ 		pirate.throw_treasure();
+ 	} else {
+ 		pirate.put_coin_on_ship();
+ 	}
+ }*/
+
+ /*void NoCard::action(const Pirate& pirate) {
+ 	pirate.kill();
+ 	pirate.throw_coin();
+ 	pirate.throw_treasure();
+ 	pirate.go_from_ship();
+ }*/
 
  void NoCard::print_card_up() {
  	std::cout << "|   |";
