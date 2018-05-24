@@ -68,7 +68,7 @@ void GameSession::start() {
 					players[turn].print_pirates_info();
 					do {
 						do {
-							std::cout << "Enter your choice (1 to 3): ";
+							std::cout << "Enter your choice (0 to 2): ";
 							std::cin.clear();
 							std::cin.ignore(256, '\n');
 							std::cin >> pirate_move;
@@ -93,7 +93,7 @@ void GameSession::start() {
 							default:
 								std::cout << "Wrong command. Repeat" << std::endl;
 						}
-						if (!(move_poss = players[turn].move_pirate(move_type, pirate_move))) {
+						if (!(move_poss = players[turn].move_pirate(move_type, pirate_move - 1))) {
 							std::cout << "You can not move your pirate in that direction. Repeat" << std::endl;
 						}
 					} while (!move_poss);
