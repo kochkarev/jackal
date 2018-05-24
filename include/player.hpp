@@ -15,22 +15,15 @@ public:
 	void print_pirates_info();
 	void set_ship_pos(int row, int col) { ship_pos = std::make_pair(row, col); }
 	void set_board(std::shared_ptr<GameBoard> board) { game_board = board; }
-	void inc_coins() { 
-		std::cout << "#####INC_COINS() FROM-> " << coins_on_ship << "\n"; 
-		coins_on_ship = coins_on_ship + 1;
-		std::cout << "#####INC_COINS() TO-> " << coins_on_ship << "\n"; 
-	}
-	void dec_pirates() {
-		std::cout << "#####DEC_PIRATES() FROM-> " << pirates_cnt << "\n"; 
-		pirates_cnt = pirates_cnt - 1;
-		std::cout << "#####DEC_PIRATES() TO-> " << pirates_cnt << "\n";
-	}
+	void inc_coins() { coins_on_ship++; }
+	void dec_pirates() { pirates_cnt--;	}
 	void fix_pirates(Player *ptr);
 	bool move_pirate(MoveTypes type, int num);
 	bool move_ship(MoveTypes type);
 	bool alive_pirate(int num);
 	int get_pirates() { return pirates_cnt; }
 	int get_coins() { return coins_on_ship; }
+	std::string get_name() { return player_name; }
 	std::shared_ptr<GameBoard> get_board() { return game_board; }
 private:
 	std::string player_name;

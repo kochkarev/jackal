@@ -49,10 +49,15 @@ void GameSession::start() {
 	MoveTypes move_type;
 	register_players();
 	board_ptr = std::make_shared<GameBoard>(players_num);
+	int players_left = players_num;
 	for (int i = 0; i < players_num; i++) {
 		players[i].set_board(board_ptr);
 	}
 	while(true) {
+		if (players[turn].get_pirates() == 0) {
+			std::cout << "This player is out of the game. It is turn of the next player" << std::endl;
+			turn = (turn + 1) % players_num;
+		}
 		board_ptr->print_board();
 		players[turn].print_general_info();
 		std::cout << "Choose action: " << std::endl;
@@ -133,25 +138,52 @@ void GameSession::start() {
 
 		std::cout << "The turn is finished" << std::endl;
 		turn = (turn + 1) % players_num;
-		check_if_finished();
-		if (finished) {
+		players_left = check_if_finished();
+		std::cout << "There are " << players_left << " players left" << std::endl;
+		if (finished || players_left == 1) {
 			break;
 		}
 	}
+
 	std::cout << "The game is finished. Winner is " << win_player << std::endl;
 }
 
-void GameSession::check_if_finished() {
+int GameSession::check_if_finished() {
 	int coins_sum = 0;
+	int players_left = 0;
 	for (int i = 0; i < players_num; i++) {
 		coins_sum += players[i].get_coins();
-		if (players[i].get_pirates() == 0) {
-			finished = true;
+		if (players[i].get_pirates() != 0) {
+			players_left++;
 		}
 	}
 	if (coins_sum == COINS_ATALL) {
 		finished = true;
 	}
+	return players_left;
 }
+
+void GameSession::set_win_name_p() {
+	for (int i = 0; i < players_num; i++) {
+		if (players[i].get_pirates() != 0) {
+			win_player = players[i].get_name();
+		}
+	}
+}
+
+void GameSession::set_win_name_c() {
+	int max = 0;
+	int max_i = 0;
+	for (int i = 0; i < players_num; i++) {
+		if (players[i].get_coins() > max) {
+			max = players[i].get_coins();
+			max_i = i;
+		}
+	}
+	win_player = players[max_i].get_name();
+}
+
+
+
 
 
