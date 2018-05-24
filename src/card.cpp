@@ -89,7 +89,8 @@ void NoStandCard::print_card_down() {
 	}
 }
 
-/*void NoStandCard::action(const Pirate& pirate) {
+void NoStandCard::action(Pirate& pirate) {
+	std::cout << "NoStandCard::action() " << std::endl;
 	switch (nscard_type) {
 		case NSC_ARRUP:
 			break;
@@ -106,7 +107,7 @@ void NoStandCard::print_card_down() {
  			pirate.go_from_ship();
 			break;
 	}
-}*/
+}
 
 StandCard::StandCard(StandCardType type, int row, int col) {
 	card_pos = std::make_pair(row, col);
@@ -171,9 +172,9 @@ void StandCard::print_card_down() {
 	}
 }
 
-//void StandCard::action(const Pirate &pirate) { // TODO
-//
-//}
+void StandCard::action(Pirate &pirate) { // TODO
+	std::cout << "HAHA" << std::endl;
+}
 
 ShipCard::ShipCard(PlayerColor color, int row, int col) {
 	card_pos = std::make_pair(row, col);
@@ -206,22 +207,25 @@ void ShipCard::print_card_up() {
  	std::cout << "|" << pirates_cnt << "  |";
  }
 
- /*void ShipCard::action(const Pirate& pirate) {
+ void ShipCard::action(Pirate& pirate) {
  	if (pirate.get_color() != ship_color) {
+ 		std::cout << "GOT ON WRONG SHIP" << std::endl;
  		pirate.kill();
  		pirate.throw_coin();
  		pirate.throw_treasure();
  	} else {
  		pirate.put_coin_on_ship();
+ 		std::cout << "GOT ON RIGHT SHIP" << std::endl;
  	}
- }*/
+ }
 
- /*void NoCard::action(const Pirate& pirate) {
+ void NoCard::action(Pirate& pirate) {
+ 	std::cout << "FALL IN WATER!" << std::endl;
  	pirate.kill();
  	pirate.throw_coin();
  	pirate.throw_treasure();
  	pirate.go_from_ship();
- }*/
+ }
 
  void NoCard::print_card_up() {
  	std::cout << "|   |";

@@ -4,7 +4,6 @@
 #include <array>
 
 #include "gameboard.hpp"
-#include "card.hpp"
 #include "constants.hpp"
 
 class Pirate;
@@ -20,6 +19,7 @@ public:
 	bool move_pirate(MoveTypes type, int num); // TODO
 	bool move_ship(MoveTypes type);
 	bool alive_pirate(int num);
+	std::shared_ptr<GameBoard> get_board() { return game_board; }
 private:
 	std::string player_name;
 	PlayerColor player_color;
@@ -29,6 +29,7 @@ private:
 	int pirates_cnt = 3;
 	int coins_on_ship = 0;
 	bool check_ship_move(MoveTypes type);
+	bool check_pirate_move(MoveTypes type, int num);
 	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type);
 	friend class TestPlayer;
 };

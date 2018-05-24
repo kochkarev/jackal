@@ -1,9 +1,10 @@
 #ifndef __PIRATE_HPP__
 #define __PIRATE_HPP__
 
-#include "gameboard.hpp"
-#include "card.hpp"
 #include "constants.hpp"
+#include <vector>
+#include <map>
+#include <memory>
 
 class Player;
 

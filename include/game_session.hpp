@@ -10,7 +10,7 @@
 
 class GameSession {
 public:
-	void start(); // TODO
+	void start(); 
 private:
 	int players_num;
 	bool finished = false;

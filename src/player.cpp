@@ -98,13 +98,13 @@ bool Player::check_ship_move(MoveTypes type) {
 	return false;
 }
 
-/*bool Player::check_pirate_move(MoveTypes type, int num) {
+bool Player::check_pirate_move(MoveTypes type, int num) {
 	auto tmp = new_pos(pirates[num]->get_pos(), type);
 	if (tmp.first < 0 || tmp.first > BOARD_SIZE - 1 || tmp.second < 0 || tmp.second > BOARD_SIZE - 1) {
 		return false;
 	}
 	return true;
-}*/
+}
 
 std::pair<int, int> Player::new_pos(std::pair<int, int> pos, MoveTypes type) {
 	switch (type) {
@@ -146,17 +146,13 @@ bool Player::move_ship(MoveTypes type) {
 	return true;
 }
 
-bool Player::move_pirate(MoveTypes type, int num) {  // TODO
-	/*if (!check_pirate_move(type, num)) {
-		return false;
-	}
-	std::pair<int, int> prev_pos = pirates[num]->get_pos();
-	std::pair<int, int> cur_pos = new_pos(prev_pos, type);
-	pirates[num]->set_pos(cur_pos.first, cur_pos.second);
-	game_board->board[cur_pos.first * BOARD_SIZE + cur_pos.second].action(pirates[num]);*/
+bool Player::move_pirate(MoveTypes type, int num) {  
+	std::cout << "going to move the pirate" << std::endl;
 	if (!pirates[num]->move(type)) {
 		return false;
 	}
+	std::cout << "Player::move_pirate() going to make action\n";
+	game_board->get_card(pirates[num]->get_pos().first, pirates[num]->get_pos().second)->action(*pirates[num]);
 	return true;
 }
 
@@ -182,7 +178,7 @@ bool Pirate::move(MoveTypes type) {
 		return false;
 	}
 	pos = new_pos(pos, type);
-	//player_ptr->game_board->[pos.first * BOARD_SIZE + cur_pos.second].action(*this);
+	//std::cout << "Pirate::move -> position set to " << pos <<" , going to move" << std::endl;
 	return true;
 }
 
