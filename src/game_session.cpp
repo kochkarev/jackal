@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 
 #include "game_session.hpp"
 #include "gameboard.hpp"
@@ -7,32 +8,20 @@
 void GameSession::register_players() {
 	std::string name;
 	std::cout << "Enter the number of players (2 to 4): ";
-	while (!(std::cin >> players_num) || (std::cin.peek() != '\n') || (players_num != 2 && players_num != 3 && players_num != 4)) {
-		std::cin.clear();
-		std::cin.ignore(256, '\n');
-		std::cout << "Reenter the number of players (2 to 4): ";
-	}
+	//do {
+		while (!(std::cin >> players_num) || (std::cin.peek() != '\n') || (players_num != 2 && players_num != 3 && players_num != 4)) {
+			if (std::cin.eof()) std::exit(1);
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Reenter the number of players (2 to 4): ";
+		}
+//	} while (players_num != 2 && players_num != 3 && players_num != 4);
 	for (int i = 0; i < players_num; i++) {
 		std::cout << "Enter the name of player #" << i + 1 << ": ";
 		std::cin >> name;
-		switch (i) {
-			case 0:
-				std::cout << "The colour of player " << name << " is RED" << std::endl;
-				players.push_back(Player(name, PLC_RED));
-				break;
-			case 1:
-				std::cout << "The colour of player " << name << " is YELLOW" << std::endl;
-				players.push_back(Player(name, PLC_YELLOW));
-				break;
-			case 2:
-				std::cout << "The colour of player " << name << " is BLUE" << std::endl;
-				players.push_back(Player(name, PLC_BLUE));
-				break;
-			case 3:
-				std::cout << "The colour of player " << name << " is GREEN" << std::endl;
-				players.push_back(Player(name, PLC_GREEN));
-				break;
-		}
+		std::cout << "The colour of player " << name << " is " << colors_arr[i].first << std::endl;
+		players.push_back(Player(name, colors_arr[i].second)); 
+		if (std::cin.eof()) std::exit(1);
 	}
 	for (int i = 0; i < players_num; i++) {
 		players[i].fix_pirates(&(players[i]));
@@ -69,6 +58,7 @@ void GameSession::start() {
 			std::cin.clear();
 			std::cin.ignore(256, '\n');
 			std::cin >> act;
+			if (std::cin.eof()) std::exit(1);
 		} while (act != ACT_MOVE_PIRATE && act != ACT_MOVE_SHIP && act != ACT_FIN_GAME);
 		switch (act) {
 			case ACT_MOVE_PIRATE:
@@ -80,6 +70,7 @@ void GameSession::start() {
 							std::cin.clear();
 							std::cin.ignore(256, '\n');
 							std::cin >> pirate_move;
+							if (std::cin.eof()) std::exit(1);
 						} while (pirate_move != 1 && pirate_move != 2 && pirate_move != 3);
 					} while (!players[turn].alive_pirate(pirate_move - 1));
 					do {
@@ -110,6 +101,7 @@ void GameSession::start() {
 					do {
 						std::cout << "Use W A S D to move the ship: ";
 						std::cin >> move;
+						if (std::cin.eof()) std::exit(1);
 						switch (move[0]) {
 							case 'w':
 								move_type = MOVE_UP;
@@ -140,7 +132,12 @@ void GameSession::start() {
 		turn = (turn + 1) % players_num;
 		players_left = check_if_finished();
 		std::cout << "There are " << players_left << " players left" << std::endl;
-		if (finished || players_left == 1) {
+		if (finished ) { 
+			set_win_name_c();				   //|| players_left == 1) {
+			break;
+		}
+		if (players_left == 1) {
+			set_win_name_p();
 			break;
 		}
 	}

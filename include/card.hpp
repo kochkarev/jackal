@@ -23,17 +23,17 @@ protected:
 
 class NoCard : public Card {
 public:
-	NoCard(int row, int col) { card_pos = std::make_pair(row, col); } // ???
+	NoCard(int row, int col) { card_pos = std::make_pair(row, col); } // UNIT TESTED
 	virtual void print_card_up(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void print_card_down(); // TRIVIAL MANUAL VISUAL TEST
-	virtual void action(Pirate &pirate); // ???
+	virtual void action(Pirate &pirate); // INTEGRATE TESTED
 
 	friend class TestCard; // TESTING CLASS FOR CPPUNIT
 };
 
 class NoStandCard : public Card {
 public:
-	NoStandCard(NoStandCardType type, int row, int col); // ???
+	NoStandCard(NoStandCardType type, int row, int col); // UNIT TESTED
 	virtual void print_card_up(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void print_card_down(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void action(Pirate &pirate); // ???
@@ -45,7 +45,7 @@ private:
 
 class StandCard : public Card {
 public:
-	StandCard(StandCardType type, int row, int col); // ???
+	StandCard(StandCardType type, int row, int col); // UNIT TESTED
 	virtual void print_card_up(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void print_card_down(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void action(Pirate &pirate);  // ???
@@ -64,7 +64,7 @@ private:
 
 class ShipCard : public Card {
 public:
-	ShipCard(PlayerColor color, int row, int col);
+	ShipCard(PlayerColor color, int row, int col); // UNIT TESTED
 	virtual void print_card_up(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void print_card_down(); // TRIVIAL MANUAL VISUAL TEST
 	virtual void action(Pirate& pirate); // ???

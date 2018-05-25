@@ -43,7 +43,9 @@ private:
 	bool on_ship = true;
 	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type); // THE SAME WAS TESTED IN TEST_PLAYER
 
-	friend class TestPirate; //TESTING CLASS FOR CPPUNIT
+	friend class TestPlayer; // TESTING CLASS FOR CPPUNIT
+	friend class TestPirate; // TESTING CLASS FOR CPPUNIT
+	friend class TestCard; // TESTING CLASS FOR CPPUNIT
 };
 
 #endif

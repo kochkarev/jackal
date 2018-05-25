@@ -1,4 +1,4 @@
-CC = g++
+CC = g++-7
 CFLAGS = -I include -Wall -Werror -pedantic-errors -Wextra -std=c++14 -ftrapv -fsanitize=undefined -O2
 
 all : build_obj

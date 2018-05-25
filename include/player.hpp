@@ -1,4 +1,4 @@
--#ifndef __PLAYER_HPP__
+#ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
 #include <array>
@@ -39,6 +39,7 @@ private:
 
 	friend class TestPlayer; // TESTING CLASS FOR CPPUNIT
 	friend class TestPirate; // TESTING CLASS FOR CPPUNIT
+	friend class TestCard; // TESTING CLASS FOR CPPUNIT
 };
 
 #endif
