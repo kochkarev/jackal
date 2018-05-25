@@ -10,21 +10,21 @@ class Pirate;
 
 class Player {
 public:
-	Player(const std::string& name, PlayerColor color);
-	void print_general_info();
-	void print_pirates_info();
-	void set_ship_pos(int row, int col) { ship_pos = std::make_pair(row, col); }
-	void set_board(std::shared_ptr<GameBoard> board) { game_board = board; }
-	void inc_coins() { coins_on_ship++; }
-	void dec_pirates() { pirates_cnt--;	}
-	void fix_pirates(Player *ptr);
-	bool move_pirate(MoveTypes type, int num);
-	bool move_ship(MoveTypes type);
-	bool alive_pirate(int num);
-	int get_pirates() { return pirates_cnt; }
-	int get_coins() { return coins_on_ship; }
-	std::string get_name() { return player_name; }
-	std::shared_ptr<GameBoard> get_board() { return game_board; }
+	Player(const std::string& name, PlayerColor color); // UNIT TESTED
+	void print_general_info(); // NOTING TO TEST
+	void print_pirates_info(); // NOTING TO TEST
+	void set_ship_pos(int row, int col) { ship_pos = std::make_pair(row, col); } // NOTING TO TEST
+	void set_board(std::shared_ptr<GameBoard> board) { game_board = board; } // NOTING TO TEST
+	void inc_coins() { coins_on_ship++; } // NOTING TO TEST
+	void dec_pirates() { pirates_cnt--;	} // NOTING TO TEST
+	void fix_pirates(Player *ptr); // ???
+	bool move_pirate(MoveTypes type, int num);  // ???
+	bool move_ship(MoveTypes type); // ???
+	bool alive_pirate(int num); // NOTING TO TEST
+	int get_pirates() { return pirates_cnt; } // NOTING TO TEST
+	int get_coins() { return coins_on_ship; } // NOTING TO TEST
+	std::string get_name() { return player_name; } // NOTING TO TEST
+	std::shared_ptr<GameBoard> get_board() { return game_board; } // NOTING TO TEST
 private:
 	std::string player_name;
 	PlayerColor player_color;
@@ -33,9 +33,9 @@ private:
 	std::shared_ptr<GameBoard> game_board;
 	int pirates_cnt = 3;
 	int coins_on_ship = 0;
-	bool check_ship_move(MoveTypes type);
-	bool check_pirate_move(MoveTypes type, int num);
-	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type);
+	bool check_ship_move(MoveTypes type); // ???
+	bool check_pirate_move(MoveTypes type, int num); // UNIT TESTED
+	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type); // UNIT TESTED
 	friend class TestPlayer;
 };
 

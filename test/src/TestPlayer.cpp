@@ -20,7 +20,68 @@ void TestPlayer::test_check_ship_move() {
 
 }
 
-void TestPlayer::testInit() {
+void TestPlayer::test_pirate_move() {
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_UP, 0) == false);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_UP, 1) == false);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_UP, 2) == false);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_DOWN, 0) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_DOWN, 1) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_DOWN, 2) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_LEFT, 0) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_LEFT, 1) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_LEFT, 2) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_RIGHT, 0) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_RIGHT, 1) == true);
+	CPPUNIT_ASSERT(pl1->check_pirate_move(MOVE_RIGHT, 2) == true);
+
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_UP, 0) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_UP, 1) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_UP, 2) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_DOWN, 0) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_DOWN, 1) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_DOWN, 2) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_LEFT, 0) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_LEFT, 1) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_LEFT, 2) == true);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_RIGHT, 0) == false);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_RIGHT, 1) == false);
+	CPPUNIT_ASSERT(pl2->check_pirate_move(MOVE_RIGHT, 2) == false);
+
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_UP, 0) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_UP, 1) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_UP, 2) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_DOWN, 0) == false);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_DOWN, 1) == false);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_DOWN, 2) == false);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_LEFT, 0) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_LEFT, 1) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_LEFT, 2) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_RIGHT, 0) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_RIGHT, 1) == true);
+	CPPUNIT_ASSERT(pl3->check_pirate_move(MOVE_RIGHT, 2) == true);
+
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_UP, 0) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_UP, 1) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_UP, 2) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_DOWN, 0) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_DOWN, 1) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_DOWN, 2) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_LEFT, 0) == false);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_LEFT, 1) == false);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_LEFT, 2) == false);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_RIGHT, 0) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_RIGHT, 1) == true);
+	CPPUNIT_ASSERT(pl4->check_pirate_move(MOVE_RIGHT, 2) == true);
+}
+
+void TestPlayer::test_new_pos() {
+	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_UP) == std::make_pair(11, 3));
+	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_DOWN) == std::make_pair(13, 3));
+	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_LEFT) == std::make_pair(12, 2));
+	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_RIGHT) == std::make_pair(12, 4));
+}
+
+void TestPlayer::test_constr() {
 	CPPUNIT_ASSERT(pl1->player_name == "PLAYER_1");
 	CPPUNIT_ASSERT(pl1->player_color == PLC_RED);
 	CPPUNIT_ASSERT(pl2->player_name == "PLAYER_2");

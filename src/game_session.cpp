@@ -45,8 +45,8 @@ void GameSession::start() {
 	int act = 0;
 	int pirate_move;
 	std::string move;
-	bool move_poss;
-	MoveTypes move_type;
+	bool move_poss = false;
+	MoveTypes move_type = MOVE_UP;
 	register_players();
 	board_ptr = std::make_shared<GameBoard>(players_num);
 	int players_left = players_num;
