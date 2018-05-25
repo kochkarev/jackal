@@ -17,6 +17,25 @@ void TestPlayer::tearDown() {
 }
 
 void TestPlayer::test_check_ship_move() {
+	CPPUNIT_ASSERT(pl1->check_ship_move(MOVE_UP) == false);
+	CPPUNIT_ASSERT(pl1->check_ship_move(MOVE_DOWN) == false);
+	CPPUNIT_ASSERT(pl1->check_ship_move(MOVE_LEFT) == true);
+	CPPUNIT_ASSERT(pl1->check_ship_move(MOVE_RIGHT) == true);
+
+	CPPUNIT_ASSERT(pl2->check_ship_move(MOVE_UP) == true);
+	CPPUNIT_ASSERT(pl2->check_ship_move(MOVE_DOWN) == true);
+	CPPUNIT_ASSERT(pl2->check_ship_move(MOVE_LEFT) == false);
+	CPPUNIT_ASSERT(pl2->check_ship_move(MOVE_RIGHT) == false);
+
+	CPPUNIT_ASSERT(pl3->check_ship_move(MOVE_UP) == false);
+	CPPUNIT_ASSERT(pl3->check_ship_move(MOVE_DOWN) == false);
+	CPPUNIT_ASSERT(pl3->check_ship_move(MOVE_LEFT) == true);
+	CPPUNIT_ASSERT(pl3->check_ship_move(MOVE_RIGHT) == true);
+
+	CPPUNIT_ASSERT(pl4->check_ship_move(MOVE_UP) == true);
+	CPPUNIT_ASSERT(pl4->check_ship_move(MOVE_DOWN) == true);
+	CPPUNIT_ASSERT(pl4->check_ship_move(MOVE_LEFT) == false);
+	CPPUNIT_ASSERT(pl4->check_ship_move(MOVE_RIGHT) == false);
 
 }
 
@@ -75,19 +94,19 @@ void TestPlayer::test_pirate_move() {
 }
 
 void TestPlayer::test_new_pos() {
-	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_UP) == std::make_pair(11, 3));
-	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_DOWN) == std::make_pair(13, 3));
-	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_LEFT) == std::make_pair(12, 2));
-	CPPUNIT_ASSERT(new_pos(std::make_pair(12, 3), MOVE_RIGHT) == std::make_pair(12, 4));
+	CPPUNIT_ASSERT(pl1->new_pos(std::make_pair(12, 3), MOVE_UP) == std::make_pair(11, 3));
+	CPPUNIT_ASSERT(pl1->new_pos(std::make_pair(12, 3), MOVE_DOWN) == std::make_pair(13, 3));
+	CPPUNIT_ASSERT(pl1->new_pos(std::make_pair(12, 3), MOVE_LEFT) == std::make_pair(12, 2));
+	CPPUNIT_ASSERT(pl1->new_pos(std::make_pair(12, 3), MOVE_RIGHT) == std::make_pair(12, 4));
 }
 
 void TestPlayer::test_constr() {
 	CPPUNIT_ASSERT(pl1->player_name == "PLAYER_1");
 	CPPUNIT_ASSERT(pl1->player_color == PLC_RED);
 	CPPUNIT_ASSERT(pl2->player_name == "PLAYER_2");
-	CPPUNIT_ASSERT(pl1->player_color == PLC_YELLOW);
+	CPPUNIT_ASSERT(pl2->player_color == PLC_YELLOW);
 	CPPUNIT_ASSERT(pl3->player_name == "PLAYER_3");
-	CPPUNIT_ASSERT(pl1->player_color == PLC_BLUE);
+	CPPUNIT_ASSERT(pl3->player_color == PLC_BLUE);
 	CPPUNIT_ASSERT(pl4->player_name == "PLAYER_4");
-	CPPUNIT_ASSERT(pl1->player_color == PLC_GREEN);
+	CPPUNIT_ASSERT(pl4->player_color == PLC_GREEN);
 }

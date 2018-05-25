@@ -1,4 +1,4 @@
-CC = g++-7
+CC = g++
 CFLAGS = -I include -Wall -Werror -pedantic-errors -Wextra -std=c++14 -ftrapv -fsanitize=undefined -O2
 
 all : build_obj
@@ -18,9 +18,11 @@ player.o : src/player.cpp include/player.hpp
 card.o : src/card.cpp include/card.hpp
 	$(CC) src/card.cpp -c $(CFLAGS) -o obj/card.o
 
-test_all : build_obj player_test
+test_all : player_test
 
-player_test :
-	$(CC) test/src/TestPlayer.cpp test/src/main_test.cpp obj/*.o -L lib -lcppunit -i Include -o player_test
+player_test : test/src/TestPlayer.cpp
+	$(CC) test/src/TestPlayer.cpp test/src/main_test.cpp src/player.cpp src/gameboard.cpp src/card.cpp -L lib -lcppunit -I include -o player_test
+	./player_test
 clean :
 	rm obj/*.o
+	rm *_test
