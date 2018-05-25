@@ -10,6 +10,8 @@ class TestPirate : public CppUnit::TestFixture {
 	CPPUNIT_TEST(test_constr);
 	CPPUNIT_TEST(test_move);
 	CPPUNIT_TEST(test_check_move);
+	CPPUNIT_TEST(test_put_coin_on_ship);
+	CPPUNIT_TEST(test_put_treasure_on_ship);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -18,7 +20,8 @@ protected:
 	void test_constr();
 	void test_move();
 	void test_check_move();
-
+	void test_put_coin_on_ship();
+	void test_put_treasure_on_ship();
 private:
 	Player *p1, *p2;
 };

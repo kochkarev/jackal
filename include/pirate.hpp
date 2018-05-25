@@ -26,11 +26,11 @@ public:
 	void throw_treasure() { carry_treasure = false; } // TRIVIAL
 	void go_on_ship() { on_ship = true; } // TRIVIAL
 	void go_from_ship() { on_ship = false; } // TRIVIAL
-	void put_coin_on_ship(); // ???
-	void put_treasure_on_ship(); // ???
+	void put_coin_on_ship(); // INTEGRATE TESTED
+	void put_treasure_on_ship(); // INTEGRATE TESTED
 	void set_player_ptr(Player *ptr) { player_ptr = ptr; } // TRIVIAL
-	bool check_move(MoveTypes type); // ???
-	bool move(MoveTypes type); // ???
+	bool check_move(MoveTypes type); // UNIT TESTED
+	bool move(MoveTypes type); // UNIT TESTED
 	Player *get_player_ptr() { return player_ptr; } // TRIVIAL
 private:
 	std::pair<int, int> pos;
@@ -42,7 +42,8 @@ private:
 	bool carry_treasure = false;
 	bool on_ship = true;
 	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type); // THE SAME WAS TESTED IN TEST_PLAYER
-	friend class TestPirate;
+
+	friend class TestPirate; //TESTING CLASS FOR CPPUNIT
 };
 
 #endif

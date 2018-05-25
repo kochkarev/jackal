@@ -1,4 +1,4 @@
-#ifndef __PLAYER_HPP__
+-#ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
 #include <array>
@@ -11,8 +11,8 @@ class Pirate;
 class Player {
 public:
 	Player(const std::string& name, PlayerColor color); // UNIT TESTED
-	void print_general_info(); // TRIVIAL MANUAL TEST
-	void print_pirates_info(); // TRIVIAL MANUAL TEST
+	void print_general_info(); // TRIVIAL MANUAL VISUAL TEST
+	void print_pirates_info(); // TRIVIAL MANUAL VISUAL TEST
 	void set_ship_pos(int row, int col) { ship_pos = std::make_pair(row, col); } // TRIVIAL
 	void set_board(std::shared_ptr<GameBoard> board) { game_board = board; } // TRIVIAL
 	void inc_coins() { coins_on_ship++; } // TRIVIAL
@@ -36,7 +36,9 @@ private:
 	bool check_ship_move(MoveTypes type); // UNIT TESTED
 	bool check_pirate_move(MoveTypes type, int num); // UNIT TESTED
 	std::pair<int, int> new_pos(std::pair<int, int> pos, MoveTypes type); // UNIT TESTED
-	friend class TestPlayer;
+
+	friend class TestPlayer; // TESTING CLASS FOR CPPUNIT
+	friend class TestPirate; // TESTING CLASS FOR CPPUNIT
 };
 
 #endif
