@@ -4,6 +4,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include "../../include/pirate.hpp"
+#include "../../include/player.hpp"
 
 class TestPirate : public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(TestPirate);
@@ -23,7 +24,7 @@ protected:
 	void test_put_coin_on_ship();
 	void test_put_treasure_on_ship();
 private:
-	Player *p1, *p2;
+	Pirate *p1, *p2;
 };
 
 #endif
